@@ -1,0 +1,254 @@
+
+<div class="container-scroller">
+    <!-- partial:../partials/_navbar.html -->
+ <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" style="z-index: 1!important;">
+     
+    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+      <button class="navbar-toggler navbar-toggler align-self-center bar-pc" type="button" data-toggle="minimize">
+       <!-- <span class="icon-menu"></span>-->
+       <img class="toggle" src="/images/bars-left-svgrepo-com.svg" alt="">
+      </button>
+     
+      <ul class="navbar-nav navbar-nav-right">
+        <li>
+          <form role="search" method="POST" action="/searchView">
+            <div class="input-group">
+    
+              <div class="form-outline">
+               
+                <input type="search" name="searchTerm" role="search"   id="form1" class="form-control" placeholder="Search..." aria-label="Search"/>
+                <label class="form-label" for="form1">chercher les produits</label>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
+     
+            </div>
+          </form>
+        </li>
+       
+       
+        <li class="nav-item nav-profile dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+            <div class="user">
+           
+       <img class="user-img" src="/images/user.svg" alt="profile" data-bs-toggle="modal" data-bs-target="#custom<%= client._id %>" />
+      
+            <p data-bs-toggle="modal" data-bs-target="#custom<%= client._id %>" class="username"><%= client.firstname %> <%= client.lastname  %></p>
+     
+         
+          </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+            <a class="dropdown-item">
+              
+              <i class="ti-power-off text-primary"></i>
+              Deconnexion
+            </a>
+
+
+
+          </div>
+        </li>
+       
+      </ul>
+      
+      <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas" >
+            <!-- <span class="icon-menu"></span>-->
+            <img class="toggle" src="/images/bars-right-svgrepo-com.svg" alt="">
+      </button>
+
+    </div>
+  </nav>
+    <div class="container-fluid page-body-wrapper">
+ 
+
+
+
+
+
+
+
+
+
+
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item ">
+            <a class="nav-link nav22" href="/viewUser/<%= client._id %>">
+         
+               <img class="produit" src="/images/sell-product-svgrepo-com.svg" alt=""/>
+              <span class="menu-title"> Produits</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link nav22" href="/viewUserInfo/<%= client._id %>">
+              <img class="produit" src="/images/info-icon-svgrepo-com.svg" alt=""/>
+              <span class="menu-title">Compte-Info</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav22" href="/panier/<%= client._id %>">
+             
+              <img width="30px" src="/images/panier.png" alt=""/>
+
+              <span class="menu-title"> Panier</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/historiqueUser/<%=client._id %>">
+              <img width="30px" src="/images/icons8-passé-48.png" alt=""/>
+              <span class="menu-title"> Historique
+              </span>
+            </a>
+          </li>
+  
+
+        </ul>
+      </nav>
+      
+
+
+
+        <div class="main-panel">        
+            <div class="content-wrapper">
+            
+                <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 nb-3 border-bottom">
+    
+                    <h1 class="h2"> <a href="/viewUser/<%= client._id %>">/page precedent /</a> Page:Commande</h1>
+                   
+                 
+                      <button  data-bs-toggle="modal" data-bs-target="#customPrompt<%= client._id %>" class="btn btn-primary mr-2"  style="
+                        cursor: pointer !important;">
+                
+               <i style="color: black; font-size: 20px;" class="bi bi-cart"></i>
+               Commander          
+                </button>
+                   
+            <div class="modal" id="customPrompt<%= client._id %>">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Ajouter la quantité </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+
+             
+                  </div>
+                  <form method="POST" action="/command/<%= client._id %>"  onsubmit="mail()">
+                  <div class="modal-body">
+                    <p>Confirmez l'envoie de la commande</p>
+                    <input type="hidden" data-client=" _Id Client:<%= client._id  %> _email:<%= client.email  %> _Prénom:<%= client.firstname  %> _Nom: <%= client.lastname  %>" id="comm" value="<%=panier%>" name="product" data-val="<%= panier.map(product => `
+               
+                   <b>  Commmande du produit Id:</b> ${product.idProduct}<br>
+                    <b>  nom produit:</b> ${product.name}<br>
+                    <b>  quantite:</b>  ${product.qte}<br>
+                    <b>   stock disponible:</b>  ${product.stock}<br>
+                    <b>  prix unitaire:</b> ${product.prix}<br>
+                  
+    
+                 `).join("<br>")%>">
+                   
+                  </div>
+                  <div class="modal-footer">
+                    <button  type="submit" class="btn but btn-primary" data-dismiss="modal" id="confirmButton5">Confirmer</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+            
+                </div>
+                
+        
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                
+        <div class="table-responsive">
+              <table class="table table-striped table-sm">
+                  <thead>
+                      <tr>
+                         <th scope="col">Qantite</th>
+                         <th scope="col">Nom produit</th>
+                         <th scope="col">Nom Boutique</th>
+                         <th scope="col">Stock disponible</th>
+                         <th scope="col">prix total</th>
+                         <th scope="col">action</th>
+                      </tr>
+                  </thead>
+                  <% for (let i = panier.length - 1; i >= 0; i--) { %>
+                    <tbody>
+                      <td><%= panier[i].qte %></td>
+                      <td><%= panier[i].name %></td>
+                      <td><%= panier[i].category %></td>
+                      <td><%= panier[i].stock %></td>
+                      <td><%= panier[i].prix %></td>
+                      <td>
+                        <form action="/panierdelete/<%= client._id %>" method="POST" class="position-relative">
+                          <input type="hidden" name="productDelete" value="<%= panier[i].idProduct %>">
+                          <input type="hidden" name="productqte" value="<%= panier[i].qte %>">
+                          <button type="submit" class="btn btn-danger btn-small">
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </form>
+                      </td>
+                    </tbody>
+                  <% } %>
+                  
+                 </table> 
+   
+          </div>
+          
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+     
+        
+    
+        <div class="modal" id="custom<%= client._id %>">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Deconnexion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+
+         
+              </div>
+  
+             
+              <div class="modal-footer">
+                <a href="/login" type="submit" class="btn btn-primary" data-dismiss="modal" id="confirmButton">Deconnexion</a>
+              </div>
+          
+            </div>
+          </div>
+        </div>
+
+     
+      
+
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 Code admin template   All rights reserved.</a></span>
+          Made Mali creation <img class="heart" src="images/thumbs-outlined-up-svgrepo-com (1).svg" />
+          </div>
+        </footer>
+        </div>
+
+
+
+
+    
+  </div>
+</div>
+
+
+
+
